@@ -1,0 +1,30 @@
+#include "opencv2/core/core.hpp"
+#include "opencv2/video/background_segm.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include <opencv2/opencv.hpp>
+#include <Windows.h>
+#include<iostream>
+
+using namespace std;
+using namespace cv;
+
+int main(int argc, char** argv) {
+	cvNamedWindow("win");
+
+	CvCapture* capture = cvCreateCameraCapture(0);
+	IplImage* frame;
+
+	while (1) {
+		frame = cvQueryFrame(capture);
+		if (!frame) break;
+		cvShowImage("win", frame);
+
+		char c = cvWaitKey(50);
+		if (c == 27) break;
+	}
+
+	cvReleaseCapture(&capture);
+	cvDestroyWindow("win");
+	return 0;
+}
